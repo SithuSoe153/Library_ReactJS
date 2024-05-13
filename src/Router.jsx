@@ -1,4 +1,8 @@
-import App from "./App";
+import Layout from "./views/Layout";
+import Home from "./views/Home";
+import Create from "./views/Create";
+import Search from "./views/Search";
+
 import {
     createBrowserRouter,
   } from "react-router-dom";
@@ -6,7 +10,21 @@ import {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <App/>,
+      element: <Layout/>,
+      children: [
+        {
+            path: "/",
+            element: <Home/>,
+        },
+        {
+          path: "/create",
+          element: <Create/>,
+        },
+        {
+          path: "/search",
+          element: <Search/>,
+        },
+      ]
     },
   ]);
 
