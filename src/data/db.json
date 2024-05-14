@@ -1,0 +1,104 @@
+{
+    "books": [
+        {
+            "id": 1,
+            "title": "React Basic",
+            "description": "Best for the Beginners",
+            "category": [
+                "React",
+                "Programming",
+                "JavaScript"
+            ]
+        },
+        {
+            "id": 2,
+            "title": "Node.js Fundamentals",
+            "description": "Learn the basics of Node.js",
+            "category": [
+                "Node.js",
+                "JavaScript",
+                "Backend"
+            ]
+        },
+        {
+            "id": 3,
+            "title": "Python for Data Science",
+            "description": "Mastering Python for data analysis and visualization",
+            "category": [
+                "Python",
+                "Data Science",
+                "Analytics"
+            ]
+        },
+        {
+            "id": 4,
+            "title": "Java Programming",
+            "description": "Comprehensive guide to Java programming",
+            "category": [
+                "Java",
+                "Programming",
+                "OOP"
+            ]
+        },
+        {
+            "id": 5,
+            "title": "Machine Learning with TensorFlow",
+            "description": "Build and deploy machine learning models using TensorFlow",
+            "category": [
+                "Machine Learning",
+                "TensorFlow",
+                "AI"
+            ]
+        },
+        {
+            "id": 6,
+            "title": "React Native Cookbook",
+            "description": "Recipes for building cross-platform mobile apps with React Native",
+            "category": [
+                "React Native",
+                "Mobile Development",
+                "JavaScript"
+            ]
+        },
+        {
+            "id": 7,
+            "title": "Mastering Git",
+            "description": "Comprehensive guide to version control with Git",
+            "category": [
+                "Git",
+                "Version Control",
+                "DevOps"
+            ]
+        },
+        {
+            "id": 8,
+            "title": "SQL for Data Analysis",
+            "description": "Querying and manipulating data with SQL",
+            "category": [
+                "SQL",
+                "Data Analysis",
+                "Databases"
+            ]
+        },
+        {
+            "id": 9,
+            "title": "Ethical Hacking",
+            "description": "Learn the art of ethical hacking and cybersecurity",
+            "category": [
+                "Cybersecurity",
+                "Ethical Hacking",
+                "Penetration Testing"
+            ]
+        },
+        {
+            "id": 10,
+            "title": "Docker for Developers",
+            "description": "Containerize your applications with Docker",
+            "category": [
+                "Docker",
+                "Containerization",
+                "DevOps"
+            ]
+        }
+    ]
+}
