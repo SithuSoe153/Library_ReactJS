@@ -1,15 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
+import useFetch from '../hooks/useFetch';
+
+import DataServices from '../services/data-services';
+import { useNavigate } from 'react-router-dom';
 
 export default function Create() {
+
+  let url = 'http://localhost:3000/books';
+
+  let { setPostData, data: book } = useFetch(url, { data: null }, { setData: null }, 'POST')
+
+  let dataservices = new DataServices();
+
+  let navigate = useNavigate();
+
 
   const [inputs, setInputs] = useState({
     title: '',
     description: '',
-    categories: ''
   });
 
-  const [categories, setCategories] = useState(['JS', 'HTML']);
+  const [newCategory, setNewCategory] = useState('');
+  const [categories, setCategories] = useState([]);
 
 
   const handleChange = (event) => {
@@ -22,19 +35,35 @@ export default function Create() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(inputs);
+    inputs.category = categories;
+
+    setPostData(inputs);
+
+    // dataservices.addBook(inputs);
+    // console.log(inputs);
+    // console.log(categories);
   };
 
+  useEffect(() => {
+    if (book) {
+      // navigate('/');
+    }
+  }, [book])
+
   let addCategory = (event) => {
-    setCategories(prevCategories => [inputs.categories, ...prevCategories])
-    event.target.value = ''
-    console.log(categories);
+    if (newCategory && categories.includes(newCategory)) {
+      return;
+    }
+
+    setCategories(prevCategories => [newCategory, ...prevCategories])
+    setNewCategory('')
+
   }
 
   return (
 
 
-    <form className="w-full max-w-lg mx-auto mt-5" on onSubmit={handleSubmit}>
+    <form className="w-full max-w-lg mx-auto mt-5" onSubmit={handleSubmit}>
 
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
@@ -63,7 +92,8 @@ export default function Create() {
           </label>
           <div className='flex items-center space-x-3'>
 
-            <input name='categories' value={inputs.categories} onChange={handleChange} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="Book Categories" />
+            <input name='categories' value={newCategory} onChange={e => setNewCategory(e.target.value)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="Book Categories" />
+
             <button type='button' onClick={addCategory} className='bg-primary p-1 rounded-lg mb-3'>
               < svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-white">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />

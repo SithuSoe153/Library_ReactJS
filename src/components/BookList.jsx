@@ -2,10 +2,19 @@ import React from 'react'
 import cover from '../assets/cover.jfif'
 import { useState } from 'react'
 import useFetch from '../hooks/useFetch'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+
 export default function BookList() {
 
-    let url = "http://localhost:3000/books";
+    let location = useLocation();
+    let params = new URLSearchParams(location.search);
+
+    let search = params.get('search');
+
+    let url = `http://localhost:3000/books${search ? `?title=${search}` : ''}`;
+    // let url = `http://localhost:3000/books`;
+
+    console.log(url);
 
     let [data, setData] = useState(null);
 
@@ -48,6 +57,8 @@ export default function BookList() {
 
             )
             }
+
+            {books && !books.length && < div > No books found</div>}
 
 
         </div >)

@@ -1,7 +1,16 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Navbar() {
+
+    let [search, setSearch] = useState('');
+
+    let navigate = useNavigate();
+
+    let handleSearch = (e) => {
+        navigate('/?search=' + search);
+    }
+
     return (
         <nav className='border border-b-1'>
             <ul className='flex justify-between items-center p-3 max-w-6xl mx-auto'>
@@ -10,7 +19,14 @@ export default function Navbar() {
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                     </svg>
-                    <input className='outline-none' type="text" name="" id="" placeholder='Search Books...' />
+                    <input name="search" value={search} onChange={e => setSearch(e.target.value)} className='outline-none' type="text" name="" id="" placeholder='Search Books...' />
+                    <button onClick={handleSearch} className='flex items-center gap-3 text-white bg-primary px-3 py-2 rounded-2xl'>
+                        < svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+
+                        <span className='hidden md:block'>Search</span>
+                    </button>
                 </li>
                 <Link to='/' className='flex items-center gap-3 md:-ml-32 cursor-pointer'>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
