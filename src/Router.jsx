@@ -1,6 +1,6 @@
 import Layout from "./views/Layout";
 import Home from "./views/Home";
-import Create from "./views/Create";
+import BookForm from "./views/BookForm";
 import Search from "./views/Search";
 import BookDetail from "./views/BookDetail";
 
@@ -19,7 +19,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/create",
-        element: <Create />,
+        element: <BookForm />,
+      },
+      {
+        path: "/edit/:id",
+        element: <BookForm />,
       },
       {
         path: "/search",

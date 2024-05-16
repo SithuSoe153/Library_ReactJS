@@ -9,7 +9,6 @@ function useFetch(url, setData, data, method = "GET") {
 
     useEffect(() => {
 
-
         let abortController = new AbortController();
         let signal = abortController.signal;
 
