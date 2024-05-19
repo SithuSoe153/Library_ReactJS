@@ -3,6 +3,7 @@ import useFetch from '../hooks/useFetch';
 import { db } from '../firebase';
 import { useNavigate, useParams } from 'react-router-dom';
 import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
+import useFirestore from '../hooks/useFirestore';
 
 export default function Create() {
   const { id } = useParams();
@@ -15,6 +16,9 @@ export default function Create() {
 
   const url = 'http://localhost:3000/books';
   const { setPostData, data: book } = useFetch(url, { data: null }, { setData: null }, 'POST');
+
+
+  let { updateDocument, addCollection } = useFirestore();
 
   useEffect(() => {
     if (id) {
@@ -51,16 +55,12 @@ export default function Create() {
     setPostData(dataToSubmit);
 
     if (isEdit) {
-      const ref = doc(db, 'books', id);
-      await updateDoc(ref, dataToSubmit).then(() => {
-        navigate('/');
-      });
+      await updateDocument('books', id, dataToSubmit);
     } else {
-      const ref = collection(db, "books");
-      await addDoc(ref, dataToSubmit).then(() => {
-        navigate('/');
-      });
+      await addCollection('books', dataToSubmit);
     }
+
+    navigate('/');
 
   };
 

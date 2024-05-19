@@ -7,7 +7,8 @@ import trash from '../assets/delete.svg';
 import pencil from '../assets/edit.svg';
 
 import { db } from '../firebase';
-import { collection, deleteDoc, doc, getDocs, orderBy, query } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query } from 'firebase/firestore';
+import useFirestore from '../hooks/useFirestore';
 
 export default function BookList() {
 
@@ -15,55 +16,27 @@ export default function BookList() {
     let params = new URLSearchParams(location.search);
 
     let search = params.get('search');
+    let { getCollection, deleteDocument } = useFirestore();
 
-    let [error, setError] = useState('');
-    let [books, setBooks] = useState([]);
-    let [loading, setLoading] = useState(false);
+    let { error, data: books, loading } = getCollection('books');
 
     let deleteBook = async (event, id) => {
         event.preventDefault();
-        let ref = doc(db, "books", id);
-        await deleteDoc(ref);
 
-        setBooks(books.filter(book => book.id !== id));
+        await deleteDocument('books', id);
+
+        // setBooks(books.filter(book => book.id !== id));
 
     }
 
     let url = `http://localhost:3000/books${search ? `?title=${search}` : ''}`;
     // let url = `http://localhost:3000/books`;
 
-    console.log(url);
-
     let [data, setData] = useState(null);
 
     // let { data: books, loading, error } = useFetch(url, setData, data);
 
-    useEffect(function () {
-        setLoading(true);
-        let ref = collection(db, "books");
 
-        let q = query(ref, orderBy('date', 'desc'));
-
-
-        getDocs(q).then(docs => {
-            if (docs.exists) {
-                setError("No documents found");
-                setLoading(false);
-            }
-            else {
-
-                let books = [];
-
-                docs.forEach(doc => {
-                    let book = { id: doc.id, ...doc.data() };
-                    books.push(book);
-                })
-                setBooks(books);
-                setLoading(false);
-                setError('');
-            }
-        })
-    }, [])
 
     return (
 

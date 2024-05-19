@@ -1,14 +1,24 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import useSignOut from '../hooks/useSignOut';
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function Navbar() {
 
     let [search, setSearch] = useState('');
 
     let navigate = useNavigate();
+    let { user } = useContext(AuthContext);
 
     let handleSearch = (e) => {
         navigate('/?search=' + search);
+    }
+
+    let { logout } = useSignOut();
+
+    let signOutUser = async () => {
+        await logout();
+        navigate('/login');
     }
 
     return (
@@ -19,7 +29,7 @@ export default function Navbar() {
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                     </svg>
-                    <input name="search" value={search} onChange={e => setSearch(e.target.value)} className='outline-none' type="text" name="" id="" placeholder='Search Books...' />
+                    <input name="search" value={search} onChange={e => setSearch(e.target.value)} className='outline-none' type="text" id="" placeholder='Search Books...' />
                     <button onClick={handleSearch} className='flex items-center gap-3 text-white bg-primary px-3 py-2 rounded-2xl'>
                         < svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -48,6 +58,18 @@ export default function Navbar() {
                     <div className="w-11">
 
                         <img className='w-full rounded-full' src="https://images.unsplash.com/photo-1688278233500-63c426e2e9ff?q=80&w=1180&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D/20x20" alt="" />
+                    </div>
+
+                    <div className='space-x-3'>
+
+                        {user && <button onClick={signOutUser} className='bg-red-500 text-white rounded-lg px-2 py-2 text-sm'>Logout</button>}
+
+                        {!user &&
+                            <div className='flex items-center gap-3'>
+                                <Link to={'/login'} className='border-2 border-primary text-primary rounded-lg px-2 py-2 text-sm'>Login</Link>
+                                <Link to={'/register'} className='bg-primary text-white rounded-lg px-2 py-2 text-sm'>Register</Link>
+                            </div>
+                        }
                     </div>
 
                 </li>
