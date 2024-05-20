@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import useFetch from '../hooks/useFetch';
 import { db } from '../firebase';
 import { useNavigate, useParams } from 'react-router-dom';
 import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import useFirestore from '../hooks/useFirestore';
+
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function Create() {
   const { id } = useParams();
@@ -49,9 +51,11 @@ export default function Create() {
     }));
   };
 
+  let { user } = useContext(AuthContext);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const dataToSubmit = { ...inputs, categories, date: serverTimestamp() };
+    const dataToSubmit = { ...inputs, categories, date: serverTimestamp(), uid: user.uid };
     setPostData(dataToSubmit);
 
     if (isEdit) {
